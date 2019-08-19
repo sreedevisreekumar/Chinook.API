@@ -18,24 +18,20 @@ namespace ChinookCoreAPI
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
-        {
-            
-            var builder = new ConfigurationBuilder()
-               .SetBasePath(Directory.GetCurrentDirectory())
-               .AddJsonFile("appsettings.json");
-            Configuration = builder.Build();
+        {                     
+            Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connection = Configuration.GetConnectionString("ChinookDb");
-            services.AddDbContext<ChinookContext>(options => options.UseSqlServer(connection));
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
